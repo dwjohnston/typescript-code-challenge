@@ -1,23 +1,4 @@
-type Customer = {
-    id: string;
-    name: string;
-    address: string;
-}
-
-type Item = {
-    item: string;
-    quantity: number;
-    price: number;
-    revenue: number;
-}
-
-type Order = {
-    id: number;
-    vendor: string;
-    date: string;
-    customer: string;
-    order: Array<Item>;
-}
+import { Customer, Order } from "./types";
 
 type InputData = {
     id: number;
