@@ -17,6 +17,7 @@ export async function getFakeDb(): Promise<Database> {
         getCustomers: () => {
             return Promise.resolve(data.customers)
         },
+
         getOrders: () => {
             return Promise.resolve(data.orders);
         }
