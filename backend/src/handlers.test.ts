@@ -59,7 +59,7 @@ describe(createGetCustomersHandler, () => {
         expect(fakeResJson).toHaveBeenCalledWith(testCustomers)
     })
 
-    it("If the data base throws an error, it will throw it too", async () => {
+    it("If the data base throws an error, it will pass the error the next", async () => {
         const db: Database = {
             getCustomers: async () => {
                 throw new Error("Something went wrong")
@@ -79,9 +79,10 @@ describe(createGetCustomersHandler, () => {
 
 
         const fakeReq = null as any as Request;
-        const fakeNext = null as any as NextFunction;
+        const fakeNext = jest.fn();
 
-        await expect(handler(fakeReq, fakeRes, fakeNext)).rejects.toThrow();
+        await handler(fakeReq, fakeRes, fakeNext);
         expect(fakeResJson).not.toHaveBeenCalled();
+        expect(fakeNext).toHaveBeenCalled()
     })
 })
