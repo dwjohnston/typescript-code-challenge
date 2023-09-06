@@ -8,6 +8,13 @@ function defaultErrorHandler(err, req, res, next) {
     if (res.headersSent) {
         return next(err)
     }
+
+    // And of course you could inspect the error object and return 403 type errors here
+    // eg. 
+    // if (err instanceof UnauthorizedError){
+    //     res.status(401);    
+    // }
+
     res.status(500)
     res.send("something went wrong")
 }
