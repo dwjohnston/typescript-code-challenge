@@ -8,6 +8,17 @@ import { populateDatabaseFromFile } from './populateDatabaseFromFile';
  * 
  * (On the other hand, maybe it's a feature, not a bug, because you could start doing some performance testing)
  * 
+ * And really, the complexity of this work is in the use of the streaming library,
+ * So it makes sense that this is where we would want our tests.
+ * We wouldn't want to abstract or mock away the file reading functionality, 
+ * When that's what's likely to be broken.  
+ * 
+ * Question for the interviewers: 
+ * How would you performance test this function? 
+ * I've searched a few times, and as far as I know there isn't any tooling that
+ * gives you deterministic or close to deterministic 
+ * performance profiles for a test. 
+ *  
  */
 describe(populateDatabaseFromFile, () => {
     it('Converts the data properly', async () => {

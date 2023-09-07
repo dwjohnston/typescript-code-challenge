@@ -2,6 +2,8 @@
 
 ## Candidate notes: 
 
+See my comments here, as well as sprinkled through the code. 
+
 Getting this running: 
 
 In one terminal 
@@ -32,6 +34,28 @@ Both packages have tests, they can be run with
 ```
 npm test
 ```
+
+The tests demonstrate a range of test styles:
+
+- Straight unit tests (handlers.test.ts)
+- Contract tests (contractTests.test.ts)
+- RTL unit tests (CustomerList.test.tsx, OrderList.test.tsx)
+- Whatever you call the file loading test, where it's conducting real IO operations. 
+
+### Error handling 
+
+I haven't included an error boundary in the React application, but that would be the standard thing to do. 
+There's a UX design question what should happen if something 403s, 500s, just blow the whole application up and show them a error screen? 
+
+For the API, errors can be handled up in the error middleware. 
+
+For the data ingestions, my solution is to blow up the application but see my notes about maybe we want to write out to logs instead. 
+
+### Async data loading
+
+Cool challenge. 
+
+I'm using [stream-json](https://www.npmjs.com/package/stream-json) to stream the file. 
 
 Write a Node project that:
  1. reads in the file `data.json` transforms it into a format that matches `example-output.json`
