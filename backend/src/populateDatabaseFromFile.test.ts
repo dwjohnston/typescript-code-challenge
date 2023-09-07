@@ -1,7 +1,15 @@
 import { getFakeDb } from './db';
-import { sortDataIntoCustomersAndOrders } from './sortInputDataIntoCustomersAndOrders';
+import { populateDatabaseFromFile } from './populateDatabaseFromFile';
 
-describe(sortDataIntoCustomersAndOrders, () => {
+
+
+/**
+ * These tests are using real 'fs', which might potentially be problematic if you had a lot of them/the files were big. 
+ * 
+ * (On the other hand, maybe it's a feature, not a bug, because you could start doing some performance testing)
+ * 
+ */
+describe(populateDatabaseFromFile, () => {
     it('Converts the data properly', async () => {
         const outputData = {
             "customers": [
@@ -49,9 +57,8 @@ describe(sortDataIntoCustomersAndOrders, () => {
 
         const db = await getFakeDb();
 
-        const result = await sortDataIntoCustomersAndOrders("testData/test-input-data.json", db)
+        const result = await populateDatabaseFromFile("testData/test-input-data.json", db)
         expect(result).toBe(null);
-
 
         const customers = await db.getCustomers();
         const orders = await db.getOrders();

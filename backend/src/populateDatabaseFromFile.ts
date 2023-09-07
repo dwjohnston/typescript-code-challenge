@@ -20,9 +20,7 @@ type InputData = {
     }>>
 
 }
-
-
-export async function sortDataIntoCustomersAndOrders(inputDataPath: string, db: Database): Promise<null> {
+export async function populateDatabaseFromFile(inputDataPath: string, db: Database): Promise<null> {
 
     const dbPromises = [] as Array<Promise<unknown>>;
     return new Promise((res, rej) => {
