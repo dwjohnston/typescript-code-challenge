@@ -63,6 +63,25 @@ Write a Node project that:
  3. Create an API that has 2 get API calls. One for customers and one for orders that pull data from the datastore
  4. Create a simple UI that calls the API and displays the customer and the customers orders
 
+### Pagination 
+
+These endpoints aren't paginated, and they probably should be. I think a good approach for any list data is to make the end points return a paginated like structure, eg. 
+
+```
+{
+    "data": [
+     ...
+    ], 
+    pageInfo: {
+        pageNumber: 0, 
+        totalResults: 100, 
+        resultsPerPage: "all", 
+    }
+}
+```
+
+Even if you're not implementing any pagination functionality. That way, if later you _do_ need to implement pagination, you don't need to change your response structure. 
+
 ## General Approach and Assumptions
 
 - Solution should be implemetned in TypeScript.
