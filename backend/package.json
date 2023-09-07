@@ -17,6 +17,7 @@
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.4",
     "@types/node": "^20.5.9",
+    "@types/stream-json": "^1.7.3",
     "@types/supertest": "^2.0.12",
     "babel-jest": "^29.6.4",
     "jest": "^29.6.4",

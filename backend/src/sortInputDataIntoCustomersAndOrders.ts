@@ -24,37 +24,23 @@ type InputData = {
 
 export async function sortDataIntoCustomersAndOrders(inputDataPath: string, db: Database): Promise<null> {
 
-    // const customers = [] as Array<Customer>;
-    // const orders = [] as Array<Order>;
-
-    // return new Promise((res) => {
-    //     const parser = StreamArray.withParser();
-    //     let objectCounter = 0;
-    //     parser.on('data', (data) => {
-    //         console.log(data)
-    //         return data.name === 'startObject' && ++objectCounter
-    //     });
-    //     parser.on('end', () => {
-    //         res(null);
-    //         console.log(`Found ${objectCounter} objects.`)
-    //     });
-
-    //     fs.createReadStream('data/data.json').pipe(parser);
-    // })
+    const dbPromises = [] as Array<Promise<unknown>>;
+    return new Promise((res, rej) => {
+        const parser = StreamArray.withParser();
+        let objectCounter = 0;
 
 
-    return new Promise((res) => {
+        parser.on("pipe", () => {
+            console.info("Processing stream...")
+        })
 
-        const inputData = JSON.parse(fs.readFileSync(inputDataPath, 'utf8')) as Array<InputData>;
+        parser.on('data', (data) => {
 
-        const customers = [] as Array<Customer>;
-        const orders = [] as Array<Order>;
+            const arrayItem = data.value;
+            dbPromises.push(db.addCustomer(arrayItem.customer));
 
-        inputData.forEach((v) => {
-            customers.push(v.customer)
-
-            const orderItems = Object.entries(v.order).map((v) => {
-                const [key, value] = v;
+            const orderItems = Object.entries(arrayItem.order).map((v) => {
+                const [key, value] = v as [string, InputData['order'][string]];
 
                 if (!value) {
                     throw new Error("Encountered a nullish value");
@@ -68,22 +54,33 @@ export async function sortDataIntoCustomersAndOrders(inputDataPath: string, db: 
                 };
             });
 
-            orders.push({
-                id: v.id,
-                vendor: v.vendor,
-                date: v.date,
-                customer: v.customer.id,
+            dbPromises.push(db.addOrder({
+                id: arrayItem.id,
+                vendor: arrayItem.vendor,
+                date: arrayItem.date,
+                customer: arrayItem.customer.id,
                 order: orderItems
-            })
+            }))
+        });
+
+        parser.on("error", () => {
+            rej("An error occurred while streaming");
         })
 
-        orders.forEach(v => db.addOrder(v))
-        customers.forEach(v => db.addCustomer(v));
+        parser.on('end', async () => {
+            /**
+             * Note on error handling. 
+             * This solution is a 'abort if anything goes wrong'. 
+             * Probably what you'd want is to log any errored items out to separate file, 
+             * So you can manually inspect what went wrong
+             */
 
-        res(null);
+            console.info("Streaming complete! Awaiting DB promises...")
+            await (Promise.all(dbPromises));
+            console.info("All DB promises resolved. Exiting.")
+            res(null);
+        });
 
-
+        fs.createReadStream(inputDataPath).pipe(parser);
     })
-
-
 }
