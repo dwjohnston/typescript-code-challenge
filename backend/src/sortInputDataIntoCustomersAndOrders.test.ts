@@ -1,38 +1,8 @@
+import { getFakeDb } from './db';
 import { sortDataIntoCustomersAndOrders } from './sortInputDataIntoCustomersAndOrders';
 
-
 describe(sortDataIntoCustomersAndOrders, () => {
-    it('Converts the data properly', () => {
-
-        const inputData = [{
-            "id": 1,
-            "vendor": "acme",
-            "date": "03/03/2017",
-            "customer": {
-                "id": "8baa6dea-cc70-4748-9b27-b174e70e4b66",
-                "name": "Lezlie Stuther",
-                "address": "19045 Lawn Court"
-            },
-            "order": {
-                "hat": {
-                    "quantity": 14,
-                    "price": 8
-                },
-                "cake": {
-                    "quantity": 9,
-                    "price": 3
-                },
-                "ice": {
-                    "quantity": 10,
-                    "price": 5
-                },
-                "candy": {
-                    "quantity": 6,
-                    "price": 8
-                }
-            }
-        }];
-
+    it('Converts the data properly', async () => {
         const outputData = {
             "customers": [
                 {
@@ -77,10 +47,19 @@ describe(sortDataIntoCustomersAndOrders, () => {
             ]
         }
 
-        const result = sortDataIntoCustomersAndOrders(inputData)
-        expect(result.customers.length).toBe(outputData.customers.length);
-        expect(result.orders.length).toBe(outputData.orders.length);
-        expect(result).toEqual(outputData);
+        const db = await getFakeDb();
+
+        const result = await sortDataIntoCustomersAndOrders("testData/test-input-data.json", db)
+        expect(result).toBe(null);
+
+
+        const customers = await db.getCustomers();
+        const orders = await db.getOrders();
+
+        expect(customers.length).toBe(outputData.customers.length);
+        expect(orders.length).toBe(outputData.orders.length);
+        expect(customers).toEqual(outputData.customers);
+        expect(orders).toEqual(outputData.orders);
     });
 
     it.skip('If the same users appears multiple times in the input data, they will only appear once in the output data', () => {
