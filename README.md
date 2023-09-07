@@ -1,5 +1,38 @@
 # TypeScript Challenge Instructions
 
+## Candidate notes: 
+
+Getting this running: 
+
+In one terminal 
+
+```
+cd backend
+npm i 
+npm start
+
+```
+
+This will start the backend running on port 3001
+
+On another terminal 
+
+```
+cd frontend
+npm i 
+npm start
+```
+
+This will start the frontend dev server running
+
+### Tests
+
+Both packages have tests, they can be run with 
+
+```
+npm test
+```
+
 Write a Node project that:
  1. reads in the file `data.json` transforms it into a format that matches `example-output.json`
  2. load transformed data into a datastore - store can be of your choice, in memory or a local database

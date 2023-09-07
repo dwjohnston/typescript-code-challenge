@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import * as allServices from "../services/index";
 
-type AllServices = typeof allServices;
+export type AllServices = typeof allServices;
 
 const ServiceProviderContext = React.createContext(allServices);
 

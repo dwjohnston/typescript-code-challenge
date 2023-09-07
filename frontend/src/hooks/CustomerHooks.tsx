@@ -1,6 +1,6 @@
-import { useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { useServices } from "../providers/ServiceProvider";
-import { Customer, getAllCustomers } from "../services";
+import { Customer, } from "../services";
 
 export function useAllCustomers() {
 

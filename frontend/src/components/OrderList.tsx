@@ -29,7 +29,7 @@ function OrderItemsList(props: {
             </thead>
             <tbody>
                 {props.order.map((item) => {
-                    return <tr>
+                    return <tr key={item.item}>
                         <td>{item.item}</td>
                         <td>{item.price}</td>
                         <td>{item.quantity}</td>

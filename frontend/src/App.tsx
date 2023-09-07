@@ -7,7 +7,9 @@ import { OrderList } from './components/OrderList';
 import { CustomerList } from './components/CustomerList';
 
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+
+})
 
 function App() {
 
