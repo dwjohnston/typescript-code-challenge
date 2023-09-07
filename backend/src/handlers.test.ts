@@ -1,6 +1,7 @@
 import { NextFunction, RequestHandler, Response, Request, } from "express";
 import { Database } from "./db";
 import { createGetCustomersHandler } from "./handlers";
+import { createTestDatabase } from "./testUtils";
 
 describe(createGetCustomersHandler, () => {
 
@@ -47,14 +48,14 @@ describe(createGetCustomersHandler, () => {
 
 
     it("Just returns the data", async () => {
-        const db: Database = {
+        const db: Database = createTestDatabase({
             getCustomers: async () => {
                 return testCustomers
             },
             getOrders: async () => {
                 return testOrders;
             }
-        }
+        })
 
         const handler = createGetCustomersHandler(db);
 
@@ -76,14 +77,14 @@ describe(createGetCustomersHandler, () => {
     })
 
     it("If the data base throws an error, it will pass the error the next", async () => {
-        const db: Database = {
+        const db: Database = createTestDatabase({
             getCustomers: async () => {
                 throw new Error("Something went wrong")
             },
             getOrders: async () => {
                 return testOrders;
             }
-        }
+        })
 
         const handler = createGetCustomersHandler(db);
 

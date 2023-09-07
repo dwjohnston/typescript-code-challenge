@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "types": "tsc --noEmit"
   },
   "author": "",
   "license": "ISC",

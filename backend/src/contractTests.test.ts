@@ -1,6 +1,7 @@
 import request from "supertest";
 import { Database } from "./db";
 import { createServer } from "./server";
+import { createTestDatabase } from "./testUtils";
 
 
 const testCustomers = [
@@ -32,14 +33,14 @@ describe("Contract Tests", () => {
 
 
     it("GET /doesnotexist", async () => {
-        const db: Database = {
+        const db: Database = createTestDatabase({
             getCustomers: async () => {
                 return testCustomers
             },
             getOrders: async () => {
                 return []
             }
-        }
+        })
 
         const app = createServer(db);
         const response = await request(app).get("/doesnotexist");
@@ -48,14 +49,14 @@ describe("Contract Tests", () => {
     })
 
     it("GET /customers", async () => {
-        const db: Database = {
+        const db: Database = createTestDatabase({
             getCustomers: async () => {
                 return testCustomers
             },
             getOrders: async () => {
                 return []
             }
-        }
+        })
 
         const app = createServer(db);
         const response = await request(app).get("/customers");
@@ -66,14 +67,14 @@ describe("Contract Tests", () => {
     });
 
     it("GET /customers - db fails", async () => {
-        const db: Database = {
+        const db: Database = createTestDatabase({
             getCustomers: async () => {
                 throw new Error("Something went wrong")
             },
             getOrders: async () => {
                 return []
             }
-        }
+        })
 
         const app = createServer(db);
         const response = await request(app).get("/customers");
@@ -82,14 +83,14 @@ describe("Contract Tests", () => {
     });
 
     it("GET /orders", async () => {
-        const db: Database = {
+        const db: Database = createTestDatabase({
             getCustomers: async () => {
                 return []
             },
             getOrders: async () => {
                 return testOrders
             }
-        }
+        })
 
         const app = createServer(db);
         const response = await request(app).get("/orders");
@@ -100,14 +101,14 @@ describe("Contract Tests", () => {
     });
 
     it("GET /orders - db fails", async () => {
-        const db: Database = {
+        const db: Database = createTestDatabase({
             getCustomers: async () => {
                 return []
             },
             getOrders: async () => {
                 throw new Error("Something went wrong")
             }
-        }
+        })
 
         const app = createServer(db);
         const response = await request(app).get("/orders");

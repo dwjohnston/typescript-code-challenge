@@ -1,7 +1,5 @@
-import { sortDataIntoCustomersAndOrders } from "./sortInputDataIntoCustomersAndOrders"
 import { Customer, Order } from "./types"
 
-import inputData from "../data/data.json";
 
 
 export type Database = {
