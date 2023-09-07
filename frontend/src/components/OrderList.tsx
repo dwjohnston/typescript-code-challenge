@@ -70,7 +70,7 @@ export function OrderListInner() {
         </thead>
         <tbody>
             {ordersResult.data?.map((v) => {
-                return <tr>
+                return <tr key={v.id}>
                     <td>{v.id}</td>
                     <td>{v.vendor}</td>
                     <td>{v.date}</td>

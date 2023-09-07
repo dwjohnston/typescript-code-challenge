@@ -19,7 +19,7 @@ function CustomersListInner() {
         </thead>
         <tbody>
             {customersResult.data?.map((v) => {
-                return <tr>
+                return <tr key={v.id}>
                     <td>{v.name}</td>
                     <td>{v.address}</td>
 
