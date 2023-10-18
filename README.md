@@ -57,11 +57,6 @@ Cool challenge.
 
 I'm using [stream-json](https://www.npmjs.com/package/stream-json) to stream the file. 
 
-Write a Node project that:
- 1. reads in the file `data.json` transforms it into a format that matches `example-output.json`
- 2. load transformed data into a datastore - store can be of your choice, in memory or a local database
- 3. Create an API that has 2 get API calls. One for customers and one for orders that pull data from the datastore
- 4. Create a simple UI that calls the API and displays the customer and the customers orders
 
 ### Pagination 
 
@@ -82,6 +77,14 @@ These endpoints aren't paginated, and they probably should be. I think a good ap
 
 Even if you're not implementing any pagination functionality. That way, if later you _do_ need to implement pagination, you don't need to change your response structure. 
 
+
+# Problem Brief 
+
+Write a Node project that:
+ 1. reads in the file `data.json` transforms it into a format that matches `example-output.json`
+ 2. load transformed data into a datastore - store can be of your choice, in memory or a local database
+ 3. Create an API that has 2 get API calls. One for customers and one for orders that pull data from the datastore
+ 4. Create a simple UI that calls the API and displays the customer and the customers orders
 ## General Approach and Assumptions
 
 - Solution should be implemetned in TypeScript.
